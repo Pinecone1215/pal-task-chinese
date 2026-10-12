@@ -1,3 +1,4 @@
+const results = [];
 async function main() {
     const participant_id = sessionStorage.getItem("participant_id");
     if (!participant_id) {
@@ -11,7 +12,6 @@ async function main() {
     const trials = data.trials;
     const duration = config.common.duration;
 
-    const results = [];
     for(const trial of trials) {
         // 普通階段
         pos_btns.forEach((pos_btn) => {
@@ -116,7 +116,8 @@ async function main() {
             "資料上傳未確認成功",
             "請通知實驗人員，並保留此頁面。"
         );
-    }
+    } finally { sessionStorage.removeItem("participant_id"); }
+
     try { if (document.fullscreenElement) await document.exitFullscreen(); } 
     catch (error) { console.warn("無法離開全螢幕：", error); }
 }
